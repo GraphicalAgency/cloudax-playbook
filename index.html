@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudax Brand Playbook Viewer</title>
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: white;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0052cc 0%, #001f4d 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .page-info {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #f5f5f5;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 12px;
+            margin-top: 18px;
+        }
+
+        .sidebar-title:first-child {
+            margin-top: 0;
+        }
+
+        .page-link {
+            display: block;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .page-link:hover {
+            background: #e8eef7;
+            border-color: #0052cc;
+        }
+
+        .page-link.active {
+            background: #0052cc;
+            color: white;
+            border-color: #0052cc;
+            font-weight: 600;
+        }
+
+        .viewer {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+
+        .page-display {
+            max-width: 100%;
+            max-height: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+
+        .loading {
+            color: #999;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">Cloudax Brand Playbook 2026</div>
+            <div class="nav-controls">
+                <button onclick="previousPage()">← Previous</button>
+                <div class="page-info"><span id="pageNumber">1</span> / 64</div>
+                <button onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="sidebar">
+                <div class="sidebar-title">01. Brand</div>
+                <a class="page-link" onclick="loadPage(1)">Cover</a>
+                <a class="page-link" onclick="loadPage(4)">Overview</a>
+                <a class="page-link" onclick="loadPage(5)">Values</a>
+                <a class="page-link" onclick="loadPage(7)">Tone of Voice</a>
+                <a class="page-link" onclick="loadPage(8)">Messaging</a>
+
+                <div class="sidebar-title">02. Logo</div>
+                <a class="page-link" onclick="loadPage(11)">Logo Section</a>
+                <a class="page-link" onclick="loadPage(12)">Logo Design</a>
+                <a class="page-link" onclick="loadPage(13)">Logo Variations</a>
+                <a class="page-link" onclick="loadPage(14)">Logo Usage</a>
+                <a class="page-link" onclick="loadPage(15)">Clear Space</a>
+
+                <div class="sidebar-title">03. Graphics</div>
+                <a class="page-link" onclick="loadPage(20)">Section Overview</a>
+                <a class="page-link" onclick="loadPage(21)">Secondary Symbol</a>
+                <a class="page-link" onclick="loadPage(23)">Wireframe Graphic</a>
+                <a class="page-link" onclick="loadPage(24)">Wireframe Adaptability</a>
+                <a class="page-link" onclick="loadPage(26)">Icon Suite</a>
+
+                <div class="sidebar-title">04. Colour & Palette</div>
+                <a class="page-link" onclick="loadPage(27)">Section Overview</a>
+                <a class="page-link" onclick="loadPage(28)">Brand Palette</a>
+                <a class="page-link" onclick="loadPage(29)">Cloudax Sky</a>
+                <a class="page-link" onclick="loadPage(30)">Midnight Palette</a>
+                <a class="page-link" onclick="loadPage(31)">Colour Ratio</a>
+
+                <div class="sidebar-title">05. Typography</div>
+                <a class="page-link" onclick="loadPage(32)">Typography Overview</a>
+                <a class="page-link" onclick="loadPage(33)">Retni Sans</a>
+                <a class="page-link" onclick="loadPage(34)">Aptos Font</a>
+                <a class="page-link" onclick="loadPage(35)">Arial Font</a>
+                <a class="page-link" onclick="loadPage(36)">Text Hierarchy</a>
+
+                <div class="sidebar-title">06. Imagery</div>
+                <a class="page-link" onclick="loadPage(40)">Photography</a>
+                <a class="page-link" onclick="loadPage(42)">Imagery Examples</a>
+
+                <div class="sidebar-title">07. Application</div>
+                <a class="page-link" onclick="loadPage(50)">Digital Examples</a>
+                <a class="page-link" onclick="loadPage(55)">Print Examples</a>
+
+                <div class="sidebar-title">Browse All</div>
+                <input type="range" id="pageSlider" min="1" max="64" value="1" style="width: 100%; margin-top: 12px;" onchange="loadPage(this.value)">
+            </div>
+
+            <div class="viewer">
+                <img id="pageDisplay" class="page-display" src="" alt="Playbook page" style="display:none;">
+                <div id="loading" class="loading">Loading page...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 64;
+
+        // Map logical page numbers to actual filename suffixes
+        const fileMapping = {
+            1: "1", 2: "12", 3: "13", 4: "14", 5: "15",
+            6: "16", 7: "17", 8: "18", 9: "19", 10: "110",
+            11: "111", 12: "112", 13: "113", 14: "114", 15: "115",
+            16: "116", 17: "117", 18: "118", 19: "119", 20: "120",
+            21: "121", 22: "122", 23: "123", 24: "124", 25: "125",
+            26: "126", 27: "127", 28: "128", 29: "129", 30: "130",
+            31: "131", 32: "132", 33: "133", 34: "134", 35: "135",
+            36: "136", 37: "137", 38: "138", 39: "139", 40: "140",
+            41: "141", 42: "142", 43: "143", 44: "144", 45: "145",
+            46: "146", 47: "147", 48: "148", 49: "149", 50: "150",
+            51: "151", 52: "152", 53: "153", 54: "154", 55: "155",
+            56: "156", 57: "157", 58: "158", 59: "159", 60: "160",
+            61: "161", 62: "162", 63: "163", 64: "164"
+        };
+
+        function getImageFilename(pageNum) {
+            const suffix = fileMapping[pageNum] || pageNum;
+            return `JPGs/Cloudax26.00_Playbook_1920x1080_v${suffix}.jpg`;
+        }
+
+        function loadPage(pageNum) {
+            pageNum = parseInt(pageNum);
+            if (pageNum < 1 || pageNum > totalPages) return;
+
+            currentPage = pageNum;
+            const imgElement = document.getElementById('pageDisplay');
+            const loadingElement = document.getElementById('loading');
+
+            imgElement.style.display = 'none';
+            loadingElement.style.display = 'block';
+
+            const filename = getImageFilename(pageNum);
+            imgElement.src = filename;
+
+            imgElement.onload = () => {
+                loadingElement.style.display = 'none';
+                imgElement.style.display = 'block';
+            };
+
+            imgElement.onerror = () => {
+                loadingElement.innerHTML = `<div>Could not load page ${pageNum}<br><small>Make sure JPGs folder is in the same directory as this file</small></div>`;
+            };
+
+            document.getElementById('pageNumber').textContent = pageNum;
+            document.getElementById('pageSlider').value = pageNum;
+
+            // Update active link
+            document.querySelectorAll('.page-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event?.target?.classList.add('active');
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                loadPage(currentPage + 1);
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                loadPage(currentPage - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextPage();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousPage();
+            }
+        });
+
+        // Load first page
+        loadPage(1);
+    </script>
+</body>
+</html>
